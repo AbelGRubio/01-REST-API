@@ -5,9 +5,9 @@
 
 from flask import jsonify
 
-from rest_api_agr.functions import record_visit, \
+from .functions import record_visit, \
     process_channel, process_management, LOGGER
-from rest_api_agr.global_parameters import APP, PROCESS_RUNNING
+from .configuration import APP, PROCESS_RUNNING
 from multiprocessing import Process
 
 

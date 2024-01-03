@@ -5,8 +5,9 @@
 import time
 from flask import request
 
-from rest_api_agr import LOGGER, LOGGER_NAME
-import rest_api_agr.global_parameters as api_global
+from .configuration import (
+    LOGGER, LOGGER_NAME, UNIQUE_URL_VISITS, CHANNEL,
+    STATUS_CHANNEL, define_connection, STATUS_MANAGEMENT)
 
 
 def count_unique_visits(base_url: str = '',
@@ -20,11 +21,11 @@ def count_unique_visits(base_url: str = '',
     :return: Nothing
     """
 
-    if base_url in api_global.UNIQUE_URL_VISITS:
-        if user not in api_global.UNIQUE_URL_VISITS[base_url]:
-            api_global.UNIQUE_URL_VISITS[base_url].append(user)
+    if base_url in UNIQUE_URL_VISITS:
+        if user not in UNIQUE_URL_VISITS[base_url]:
+            UNIQUE_URL_VISITS[base_url].append(user)
     else:
-        api_global.UNIQUE_URL_VISITS[base_url] = [user]
+        UNIQUE_URL_VISITS[base_url] = [user]
 
 
 def record_visit() -> (str, str, str):
@@ -38,7 +39,7 @@ def record_visit() -> (str, str, str):
     user = request.remote_addr
     base_url = request.base_url
 
-    api_global.CHANNEL.basic_publish(
+    CHANNEL.basic_publish(
         exchange='',
         routing_key='api_amqp',
         body='{}-{}-{}'.format(user, base_url, meth))
@@ -55,7 +56,7 @@ def record_message(message: str) -> bool:
 
     state = True
     try:
-        api_global.CHANNEL.basic_publish(
+        CHANNEL.basic_publish(
             exchange='',
             routing_key='api_amqp',
             body=message)
@@ -92,20 +93,20 @@ def read_logger_visits() -> list:
 def process_management() -> None:
     count_time = 0
 
-    api_global.define_connection()
+    define_connection()
 
     time.sleep(1)
     # set_channel_pika(channel_pika)
 
     record_message('Starting process management')
 
-    while api_global.STATUS_MANAGEMENT:
+    while STATUS_MANAGEMENT:
         record_message('Doing stuff on process management. Time {}'.format(count_time))
         time.sleep(5)
         count_time += 1
 
     record_message('Finishing process management')
-    api_global.CHANNEL.stop_consuming()
+    CHANNEL.stop_consuming()
 
     return None
 
@@ -114,13 +115,13 @@ def process_channel(
         num_channel: int) -> None:
     count_time = 0
 
-    api_global.define_connection()
+    define_connection()
 
     time.sleep(1)
 
     record_message('Starting process channel {}'.format(num_channel))
 
-    while api_global.STATUS_CHANNEL:
+    while STATUS_CHANNEL:
         record_message('Doing stuff on process channel {}. '
                        'Time {}'.format(num_channel, count_time))
         time.sleep(1)
@@ -128,5 +129,5 @@ def process_channel(
 
     record_message('Finishing process channel {}'.format(num_channel))
 
-    api_global.CHANNEL.stop_consuming()
+    CHANNEL.stop_consuming()
 

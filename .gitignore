@@ -1,3 +1,4 @@
 /log/prueba_api.log
 /.env
 /load_env.bat
+/.idea

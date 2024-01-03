@@ -11,7 +11,7 @@ from rest_api_agr.routes import (
 from rest_api_agr.AMQP import declare_thread_ampq
 import sys
 from rest_api_agr.functions import LOGGER
-from rest_api_agr.global_parameters import APP
+from rest_api_agr.configuration import APP
 import gunicorn
 
 
