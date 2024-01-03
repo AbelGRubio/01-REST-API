@@ -1,0 +1,28 @@
+name: Semantic release
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+    runs-on: self-hosted
+    environment: deploy-env
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Semantic Release
+        run: |
+          pip install python-semantic-release
+          pip install -r requirements.txt
+          echo "Update version package..."
+          git config user.name ${GIT_USER}
+          git config user.email ${GIT_MAIL}
+          git fetch -t
+          echo "Traidas todas las tags"
+          semantic-release publish
