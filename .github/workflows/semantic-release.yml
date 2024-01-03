@@ -26,4 +26,5 @@ jobs:
           git fetch -t
           echo "Traidas todas las tags"
           semantic-release version
+          echo "update version" 
           semantic-release publish
