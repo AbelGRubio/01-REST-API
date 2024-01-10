@@ -7,9 +7,6 @@
     To solve this problem we are going to use an API REST using
     Flask
 
-
-    eee
-
 """
 
 __version__ = '0.0.1'
