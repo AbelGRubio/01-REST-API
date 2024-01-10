@@ -2,6 +2,13 @@
 
 
 
+## v0.0.4 (2024-01-10)
+
+### Fix
+
+* fix(abel): change for semantic-release ([`80f62f4`](https://github.com/AbelGRubio/01-REST-API/commit/80f62f485da25cb5bfdcc60c3528e93859d0f4b0))
+
+
 ## v0.0.3 (2024-01-10)
 
 ### Fix
