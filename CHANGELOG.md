@@ -2,6 +2,15 @@
 
 
 
+## v0.0.2 (2024-01-10)
+
+### Fix
+
+* fix(abel): change for semantic-release ([`6bd0c25`](https://github.com/AbelGRubio/01-REST-API/commit/6bd0c2550d3ab2b559d6e78f70d2d89ea6621794))
+
+* fix(abel): update semantic release action ([`53f5e22`](https://github.com/AbelGRubio/01-REST-API/commit/53f5e22c49f109b3a1eb7cf4a25df8cf48ad44cb))
+
+
 ## v0.0.1 (2024-01-03)
 
 ### Fix
