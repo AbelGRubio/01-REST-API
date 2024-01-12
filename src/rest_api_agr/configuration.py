@@ -11,32 +11,14 @@ import os
 import sys
 from logging.handlers import TimedRotatingFileHandler
 
-import pika
-from flask import Flask
+from fastapi import FastAPI, HTTPException
 
-APP = Flask(__name__)
+
+APP = FastAPI()
+
 UNIQUE_URL_VISITS = {}
 
-CONNECTION, CHANNEL = None, None
-
-
-PROCESS_RUNNING = {}
-STATUS_MANAGEMENT = True
-STATUS_CHANNEL = True
-
-
-def define_connection():
-    global CONNECTION, CHANNEL
-
-    CONNECTION = pika.BlockingConnection(
-        pika.ConnectionParameters(host='localhost',
-                                  port=5672,
-                                  heartbeat=10))
-    CHANNEL = CONNECTION.channel(channel_number=0)
-    CHANNEL.queue_declare(queue='api_amqp', durable=False)
-
-
-LOGGER_NAME = "amqp_api"
+LOGGER_NAME = "fastapi"
 
 
 def set_logger() -> logging.Logger:
