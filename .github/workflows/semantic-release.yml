@@ -19,12 +19,14 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Poetry
-        run: pipx install poetry
+        run: pip install poetry
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
           cache: "poetry"
+
       - name: Install dependencies
         run: poetry install
 
